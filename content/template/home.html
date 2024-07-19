@@ -6,6 +6,7 @@
 <div id="vue-app" class="row justify-content-center bg-white p-5 shadow rounded">
     <header class="text-center pb-5">
         <h2 class="h2">Your Tasks!</h2>
+        <a href="/calendar/" class="btn btn-primary">Calendar View</a>
     </header>
 
     <div v-if="errored">
@@ -37,7 +38,7 @@
             <div class="col-sm">
                 <h6 class="h4">Done</h6>
                 <task v-for="task in done_tasks" :key="task.id" :task="task"></task>
-
+                <button class="btn btn-secondary" @click="clearDoneTasks">Clear Done Tasks</button>
             </div>
         </div>
 
@@ -237,6 +238,13 @@
                     .catch(error => {
                         console.log(error);
                     });
+            },
+            clearDoneTasks() {
+                const doneTasks = this.tasks.filter(task => task.status === 3);
+                doneTasks.forEach(task => {
+                    let task_id = task.id;
+                    this.deleteTaskFromBackend(task_id);
+                });
             },
             fetchTasks() {
                 axios
