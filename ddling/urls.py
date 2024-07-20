@@ -15,14 +15,24 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+
+from account import views
 from account.views import home_view, calendar_view, TaskUpdateView, TaskDeleteView, ListTasksView
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('account/', include('account.urls')),
-    path('', home_view, name='home'),
+    path('home/', home_view, name='home'),
     path('api/<int:pk>/', TaskUpdateView.as_view(), name='update-task'),
     path('api/<int:pk>/delete/', TaskDeleteView.as_view(), name='delete-task'),
     path('api/', ListTasksView.as_view(), name='list-task'),
     path('calendar/', calendar_view, name='calendar'),
+
+    path('', views.index, name='index'),
+    path('index/', views.index, name='index'),
+    path('contact/', views.contact, name='contact'),
+    path('register/', views.register, name='register'),
+    path('user_center/', views.user_center, name='user_center'),
+    path('sign in/', views.sign_in, name='sign in'),
 ]

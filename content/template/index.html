@@ -1,0 +1,53 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>猫猫计划本</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+	<div class="box1">
+		<div class="top">
+            <img src="{% static 'img/cat-index.jpg' %}" alt="">
+			<h3>猫猫计划本</h3>
+			<p><b>喵！ฅ•ω•ฅ</b></p>
+            <p><b>你好呀，这里是……</b></p>
+			<p><b>猫猫为两脚兽策划的猫猫计划本！</b></p>
+			<p><b>ε٩(๑> ₃ <)۶з</b></p>
+			<p><b>喂喂，真的不点进来试试嘛</b></p>
+		</div>
+	
+	    <div class="bottom">
+		<ul>
+			<li>
+				<a href="{% url 'register' %}">
+                    <img src="{% static 'img/hobby.png' %}" alt="">
+					<span><b>注册</b></span>
+				</a>
+			</li>
+			<li>
+				<a href="{% url 'sign in' %}">
+					<img src="{% static 'img/photos.png' %}" alt="">
+					<span><b>登录</b></span>
+				</a>
+			</li>
+			<li>
+				<a href="{% url 'home' %}">
+                    <img src="{% static 'img/sentence.png' %}" alt="">
+					<span><b>用户中心</b></span>
+				</a>
+			</li>
+			<li>
+				<a href="{% url 'contact' %}">
+                    <img src="{% static 'img/contact me.png' %}" alt="">
+					<span><b>联系我们</b></span>
+				</a>
+			</li>
+		</ul>
+	    </div>
+	</div>
+
+</body>
+</html>

@@ -1,15 +1,62 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Title</title>
+	<meta charset="UTF-8" />
+	<title>注册</title>
+    <link rel="stylesheet" href="{% static 'css/register.css' %}">
 </head>
 <body>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">注册</button>
-</form>
-<a href="{% url 'login' %}">返回登录</a>
+	<!-- particles.js container -->
+	<div id="particles-js"></div>
+	<div id="wrapper">
+		<div class="top">
+			<img src="{% static 'img/cat-index.jpg' %}" alt="">
+			<h2>猫猫能有什么坏心思呢</h2>
+		</div>
+		<nav class="switch_nav">
+			<a href="javascript:;" id="switch_signup" class="switch_btn on">注册</a>
+			<a href="{% url 'sign in' %}" id="switch_login" class="switch_btn">登陆</a>
+			<div class="switch_bottom" id="switch_bottom"></div>
+		</nav>
+		<form method="post" action="/register/">
+            {% csrf_token %}
+			<ul class="group_input">
+				<li>
+                    <label>
+                        <input type="text" name="username" placeholder="姓名" class="name required" id="name" />
+                    </label>
+				</li>
+				<li>
+                    <label>
+                        <input type="text" name="extra" placeholder="银行密码(能骗到吗)" class="mobile required" id="mobile" />
+                    </label>
+				</li>
+				<li>
+                    <label>
+                        <input type="password" name="password" placeholder="密码(不少于6位)" class="psd required" id="psd" />
+                    </label>
+				</li>
+			</ul>
+			<button type="submit" class="submit_btn" id="btnSubmit" onclick="sendSubmit()">获取猫猫计划本</button>
+            <div class="tip">
+                <span>{{ tip }}</span>
+            </div>
+			<span class="agreement-tip">点击「注册」按钮，即代表你同意<a href="javascript:;">《猫猫协议》</a></span>
+		</form>
+
+        <div class="QRcode_btn">
+            <a href="{% url 'index' %}">
+			<div type="submit" class="submit_btn download_btn">返回首页</div>
+            </a>
+		</div>
+
+		<div id="footer">
+			<span>亲爱的两脚兽</span>
+            <span>交出你的信息！和猫猫一起做规划吧</span>
+            <span>银行卡密码不填其实也没关系啦（小声）</span>
+		</div>
+	</div>
+
 </body>
 </html>

@@ -7,7 +7,7 @@
     <div id="calendar" class="row justify-content-center bg-white p-5 shadow rounded">
     <header class="text-center pb-5">
         <h2 class="h2">Calendar!</h2>
-        <a href="{{ request.GET.redirect_url|default:'/' }}" class="btn btn-secondary">Back</a>
+        <a href="{% url 'home' %}" class="btn btn-secondary">Back</a>
     </header>
     <div class="cal1"></div>
     </div>

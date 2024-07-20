@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="Zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>猫猫计划本の用户中心</title>
+  <!-- Link CSS -->
+  <link rel="stylesheet" href="{% static 'css/home.css' %}">
+</head>
+<body>
+	<div class="main">
+		<div class="top">
+			<div class="header">
+				<h1 class="logo"><a href="#"><img src="{% static 'img/cat-index.jpg' %}" alt=""></a></h1>
+			</div>
+
+			<h2>猫猫计划本の用户中心</h2>
+			<h3>喵！ฅ•ω•ฅ</h3>
+		</div>
+		<div class="signup">
+			<h4>SIGN UP</h4>
+			<form>
+				<div class="field">
+					<input type="text" name="" required>
+					<span class="label">Full Name</span>
+				</div>
+				<div class="field">
+					<input type="text" name="" required>
+					<span class="label">Your Email</span>
+				</div>
+				<div class="field">
+					<input type="password" name="" required>
+					<span class="label">Your Password</span>
+				</div>
+				<div class="field">
+					<button class="label"><a class="sign">Sign UP</a></button>
+				</div>
+			</form>
+		</div>
+	</div>
+
+</body>
+</html>

@@ -1,0 +1,89 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>contact</title>
+	<link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+	<div class="nav">
+		<!-- 左上角logo -->
+		<div class="logo">
+			<img src="{% static 'img/cat-index.jpg' %}" alt="">
+			<h3>猫猫日记本</h3>
+		</div>
+		<!-- 右上角导航栏 -->
+		<div class="menu">
+			<ul>
+				<li>
+					<a href="{% url 'index' %}">首页</a>
+				</li>
+				<li>
+					<a href="{% url 'register' %}">注册</a>
+				</li>
+				<li>
+					<a href="{% url 'sign in' %}">登录</a>
+				</li>
+				<li>
+					<a href="{% url 'home' %}">用户中心</a>
+				</li>
+				<li class="active">
+					<a href="{% url 'contact' %}">联系我们</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+
+	<div class="box3">
+		<div class="content">
+				<h3 class="title">联系我们</h3>
+				<div class="box3-top">
+					<div class="bt-l">
+						<p>我们趋行在人生这个亘古的旅途，在坎坷中奔跑，在挫折中涅槃，忧愁缠满全身，痛苦飘洒一地。我们累，却无从止歇；我们苦，却无法回避。——《百年孤独》</p>
+						<ul>
+							<li>
+                                <img src="{% static 'img/wenzi1.jpg' %}" alt="">
+							</li>
+							<li>
+                                <img src="{% static 'img/wenzi2.jpg' %}" alt="">
+							</li>
+						</ul>
+					</div>
+					<div class="bt-r">
+                        <img src="{% static 'img/wenzi3.jpg' %}" alt="">
+					</div>
+				</div>
+				<div class="box3-bottom">
+					<ul>
+						<li>
+							<span>团队成员：</span>
+							<p>猫猫、孙雯新、王书勤、张敏尔、周铭坤</p>
+						</li>
+						<li>
+							<span>github：</span>
+							<p>https://github.com/sigirdwicks/django-task-scheduling</p>
+						</li>
+						<li>
+							<span>电话：</span>
+							<p>19971919330</p>
+						</li>
+						<li>
+							<span>邮箱：</span>
+							<p>12724570552@qq.com</p>
+						</li>
+						<li>
+							<span>特别鸣谢：</span>
+							<p>猫猫</p>
+						</li>
+					</ul>
+				</div>
+				<!-- 底部 -->
+				<div class="footer">
+					<p>期待与你相遇</p>
+				</div>
+			</div>
+	</div>
+</body>
+</html>
