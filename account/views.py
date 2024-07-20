@@ -9,6 +9,10 @@ def home_view(request):
     return render(request, 'home.html', {})
 
 
+def calendar_view(request):
+    return render(request, 'calendar.html', {})
+
+
 class TaskUpdateView(generics.RetrieveUpdateAPIView):
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
