@@ -1,5 +1,6 @@
 from datetime import datetime, timedelta
 
+from django.contrib.auth.models import User
 from django.db import models
 
 
@@ -20,6 +21,7 @@ class Task(models.Model):
     status = models.PositiveIntegerField(choices=Status.choices, default=Status.BACKLOG)
     importance = models.PositiveIntegerField(choices=Importance.choices, default=Importance.MEDIUM)
     due_date = models.DateField(default=datetime.today()+timedelta(days=1))
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='tasks', null=True, blank=True)
 
     def __str__(self):
         return (
@@ -29,9 +31,3 @@ class Task(models.Model):
             f"importance: {self.importance}, "
             f"due_date: {self.due_date})"
         )
-
-
-class login_data(models.Model):
-    username = models.CharField(max_length=50)
-    password = models.CharField(max_length=50)
-    sex = models.CharField(max_length=10, default="m")
