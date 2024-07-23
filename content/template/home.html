@@ -73,6 +73,19 @@
                             <label>Description</label>
                             <input type="text" class="form-control form-control-sm" v-model="description">
                         </div>
+                        <div class="form-group">
+                            <label>importance</label><br>
+                            <input type="radio" id="high" name="importance" value="0" v-model="importance" />
+                            <label for="high">high</label>
+                            <input type="radio" id="medium" name="importance" value="1" v-model="importance" />
+                            <label for="medium">medium</label>
+                            <input type="radio" id="low" name="importance" value="2" v-model="importance" />
+                            <label for="low">low</label>
+                        </div>
+                        <div class="form-group">
+                            <label>due_date</label>
+                            <input type="date" class="form-control form-control-sm" v-model="due_date">
+                        </div>
                         <a href="#" class="card-link" v-on:click="createTask" ><i class="fa fa-check"></i></a>
                         <a href="#" class="card-link" v-on:click="hideForm" ><i class="fa fa-times"></i></a>
 
@@ -85,6 +98,8 @@
                 isAdding: false,
                 title: "",
                 description: "",
+                importance: "",
+                due_date: "",
             };
         },
         methods: {
@@ -99,6 +114,8 @@
                 let data = {
                     "title": this.title,
                     "description": this.description,
+                    "importance": this.importance,
+                    "due-date": this.due_date,
                 };
                 axios
                     .post(url, data)
@@ -145,6 +162,14 @@
                             <label>Description</label>
                             <input type="text" class="form-control form-control-sm" v-model="task.description">
                         </div>
+                        <div class="form-group">
+                            <label>importance</label>
+                            <input type="text" class="form-control form-control-sm" v-model="task.importance">
+                        </div>
+                        <div class="form-group">
+                            <label>due_date</label>
+                            <input type="text" class="form-control form-control-sm" v-model="task.due_date">
+                        </div>
                         <a href="#" class="card-link" v-on:click="hideForm" ><i class="fa fa-check"></i></a>
 
                     </div>
@@ -170,6 +195,8 @@
                 let data = {
                     "title": this.task.title,
                     "description": this.task.description,
+                    "importance": this.importance,
+                    "due_date": this.due_date,
                 };
                 axios
                     .put(url, data)

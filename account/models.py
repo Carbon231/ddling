@@ -1,5 +1,5 @@
 from datetime import datetime, timedelta
-
+import datetime
 from django.contrib.auth.models import User
 from django.db import models
 
@@ -20,7 +20,7 @@ class Task(models.Model):
     description = models.TextField(blank=True)
     status = models.PositiveIntegerField(choices=Status.choices, default=Status.BACKLOG)
     importance = models.PositiveIntegerField(choices=Importance.choices, default=Importance.MEDIUM)
-    due_date = models.DateField(default=datetime.today()+timedelta(days=1))
+    due_date = models.DateField(default=datetime.date.today()+timedelta(days=1))
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='tasks', null=True, blank=True)
 
     def __str__(self):
