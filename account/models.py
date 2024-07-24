@@ -30,4 +30,5 @@ class Task(models.Model):
             f"status: {self.status}, "
             f"importance: {self.importance}, "
             f"due_date: {self.due_date})"
+            f"user:{self.user})"
         )

@@ -1,18 +1,51 @@
-{% extends 'base.html' %}
 {% load static %}
+<!DOCTYPE html>
+<html lang="en">  
+<head>  
+<meta charset="UTF-8">  
+<meta name="viewport" content="width=device-width, initial-scale=1.0">  
+<title>日历与任务计划</title>  
+<link rel="stylesheet" href="{% static 'css/clndr.css' %}">
+</head>  
+<body>  
+    <div class = "welcome-message"><h1>喵呜ฅ•ω•ฅ,欢迎查看日历</h1></div>
+<div id="calendar">  
+    <div class="header" id = "headers">  
+        <button class="prev">&laquo;</button>  
+        <span class="month">January</span>  
+        <span class="year">2023</span>  
+        <button class="next">&raquo;</button>  
+    </div>  
+    <div class="weekdays">  
+    </div>  
+    <div class="days"></div>  
+    <div id="task-list"></div>  
+</div>  
 
-{% block title %}Calendar{% endblock %}
+<div id="dialog-box" >  
+    <h4 style="color:red;">红色标注的字体是今天的日期~</h4>  
+    <h4 style="color:green;">绿色标注的是有任务的日期~</h4>
+    <h4 style="color: black;">加油吧！ε٩(๑> ₃ <)۶з</h4> 
+    <h5 style="color: black;">（点击文字查看具体任务）</h5>
+</div>
 
-{% block content %}
-    <div id="calendar" class="row justify-content-center bg-white p-5 shadow rounded">
-    <header class="text-center pb-5">
-        <h2 class="h2">Calendar!</h2>
-        <a href="{% url 'home' %}" class="btn btn-secondary">Back</a>
-    </header>
-    <div class="cal1"></div>
-    </div>
-{% endblock %}
+<div id="taskModal" class="modal">  
+    <div class="modal-content">  
+    <h4>以下是近10天内需要完成的任务</h4>
+    <h5>请尽快完成哦\(^o^)/~</h5>
+    <div id="notice-list"></div>
+    <span class="close" onclick="hideTaskModal()">&times;</span>
+</div>
+</div>
 
-{% block javascript %}
 
-{% endblock %}
+<div class = "choice">
+    <button class = "return">返回主页面</button>
+    <button class="look" onclick="showTaskModal()">任务提醒</button>
+    <button class = "exit">退出登录</button>
+</div>
+  
+<script src="{% static 'js/script.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>  
+</body>  
+</html>

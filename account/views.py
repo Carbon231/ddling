@@ -1,6 +1,9 @@
+from calendar import calendar
+from datetime import datetime
+
 from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth.models import User
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from rest_framework.permissions import IsAuthenticated
@@ -80,3 +83,38 @@ def sign_in(request):
 
 def user_center(request):
     return render(request, 'user_center.html')
+
+
+def task_to_dict(task):
+    return {
+        'title': task.title,
+        'description': task.description,
+        'status': task.get_status_display(),  # 使用choices的显示值
+        'importance': task.get_importance_display(),  # 使用choices的显示值
+        'due_date': task.due_date.isoformat(),  # 将日期转换为ISO格式字符串
+    }
+
+
+def calendar_view(request):
+    if request.method == 'POST':
+        date = request.POST['date'].split('-')
+        year = int(date[0])
+        month = int(date[1])
+        _, last_day_of_month = calendar.monthrange(year, month)
+        last_day_of_month = datetime(year, month, last_day_of_month)
+        first_day_of_month = datetime(year, month, 1)
+        current_day = first_day_of_month
+        ans = {}
+        while current_day <= last_day_of_month:
+            ans.setdefault(current_day.strftime("%Y-%m-%d"), [])
+            current_day += datetime.timedelta(days=1)
+        user_now = request.user
+        task_list = Task.objects.filter(user=user_now)
+        for task in task_list:
+            if task.due_date >= first_day_of_month and task.due_date <= last_day_of_month:
+                ans[task.due_date.strftime("%Y-%m-%d")].append(task_to_dict(task))
+        return JsonResponse(ans)
+
+    else:
+        return render(request, 'calendar.html', {})
+
