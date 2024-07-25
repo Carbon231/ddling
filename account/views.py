@@ -1,6 +1,5 @@
 from calendar import calendar
 from datetime import datetime
-
 from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect, JsonResponse
@@ -58,6 +57,8 @@ def contact(request):
 def register(request):
     if request.method == 'POST':
         username = request.POST['username']
+        if User.objects.filter(username=username).exists():
+            return render(request, 'register.html', {'error': 'Username already exist'})
         password = request.POST['password']
         user = User.objects.create_user(username=username, password=password)
         user.save()
@@ -82,7 +83,16 @@ def sign_in(request):
 
 
 def user_center(request):
-    return render(request, 'user_center.html')
+    if request.method == 'GET':
+        return render(request, 'user_center.html', {"username": request.user.username})
+    else:
+        username = request.user.username
+        password = request.POST['password']
+        user = User.objects.get(username=username)
+        user.set_password(password)
+        user.save()
+        return HttpResponseRedirect(reverse('index'))
+
 
 
 def task_to_dict(task):

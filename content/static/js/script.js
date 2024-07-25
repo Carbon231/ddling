@@ -14,7 +14,7 @@ let notice_tasks = {
 };
 
 async function fetchCalendarTasks() { 
-    const url = 'calendar/'; 
+    const url = 'calendar/';
     fetch(url)  
       .then(response => response.json())  
       .then(data => {  
@@ -141,7 +141,7 @@ function hideTaskModal() {
 
 
   document.querySelector('.exit').addEventListener('click',function(){
-    window.open('http://localhost:8000/sign%20in/'); //返回登录界面
+    window.open('http://localhost:8000/user_center/'); //返回登录界面
   })
 
 

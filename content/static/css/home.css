@@ -122,17 +122,6 @@ h3{
 	font-size: 1rem;
 }
 
-.signup button{
-	display: block;
-	width: 100%;
-	outline: none;
-	background-color: #4277b2;
-	border: 1px solid #29487d;
-	color: white;
-	font-size: 1rem;
-	cursor: pointer;
-	padding: 10px;
-}
 
 .signup .label{
 	position: absolute;
@@ -152,4 +141,24 @@ h3{
 	top: -17px;
 	font-size: .8rem;
 	opacity: 1;
+}
+
+
+.submit_btn{
+	width: 100%;
+	box-shadow: none;
+	line-height: 45px;
+	font-size: 15px;
+	display: block;
+	margin:20px 0;
+	color: #fff;
+	/*background-color: #DF744A;*/
+	background-color: #4277b2;
+	border: 1px solid #29487d;
+	border-radius: 3px;
+}
+
+.QRcode_btn{
+	position: relative;
+
 }

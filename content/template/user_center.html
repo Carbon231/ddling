@@ -15,26 +15,20 @@
 			</div>
 
 			<h2>猫猫计划本の用户中心</h2>
-			<h3>喵！ฅ•ω•ฅ</h3>
+			<h3>喵！ฅ•ω•ฅ 用户：{{ username }} 你好呀，可以在下方修改用户密码哦</h3>
 		</div>
 		<div class="signup">
-			<h4>SIGN UP</h4>
-			<form>
+			<h4>information</h4>
+			<form method="post" action="/user_center/">
+                {% csrf_token %}
 				<div class="field">
-					<input type="text" name="" required>
-					<span class="label">Full Name</span>
+                    <label>
+                        <input type="password" name="password" placeholder="New Password" />
+                    </label>
 				</div>
-				<div class="field">
-					<input type="text" name="" required>
-					<span class="label">Your Email</span>
-				</div>
-				<div class="field">
-					<input type="password" name="" required>
-					<span class="label">Your Password</span>
-				</div>
-				<div class="field">
-					<button class="label"><a class="sign">Sign UP</a></button>
-				</div>
+                <div>
+                    <button type="submit" class="submit_btn" id="btnSubmit" onclick="sendSubmit()">提交修改并返回首页</button>
+                </div>
 			</form>
 		</div>
 	</div>
