@@ -13,16 +13,58 @@ let tasks = {
 let notice_tasks = {
 };
 
+  // 初始显示当前月份的日历
+showCalendar(currentMonth, currentYear);
+
+
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+
+function add_to_tasks(data) {
+    Object.keys(data).forEach(date => {
+        const tasksForDate = data[date];
+        if (tasksForDate.length > 0) {
+            tasks[date] = tasksForDate.map(task => {
+                return `Title: ${task.title} ,Status:${task.status}, Importance:${task.importance}`;
+            });
+        }
+    });
+}
+
+
 async function fetchCalendarTasks() { 
-    const url = 'calendar/';
-    fetch(url)  
-      .then(response => response.json())  
-      .then(data => {  
-        const tasks_list = data.tasks;  
-        tasks_list.forEach(task => {  
-        tasks[new Date(task.due_date)] = `Title: ${task.title}, Status: ${task.status}, Importance: ${task.importance}`;
-        });  
-      })  
+    const url = '/calendar_data/';
+    const csrf_token = getCookie('csrftoken');
+    const data = { date: "2024-07-22" };
+    fetch(url, {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+            "X-CSRFToken": csrf_token,
+            'Content-Type': 'application/json'
+        },
+    })
+      .then(response => response.json())
+        .then(data => add_to_tasks(data))
+      // .then(data => {
+      //   const tasks_list = data.tasks;
+      //   tasks_list.forEach(task => {
+      //   tasks[new Date(task.due_date)] = `Title: ${task.title}, Status: ${task.status}, Importance: ${task.importance}`;
+      //   });
+      // })
       .catch(error => console.error('Error fetching tasks:', error));
     }  
 
@@ -65,18 +107,16 @@ async function fetchCalendarTasks() {
       // 更新头部月份和年份  
       document.querySelector('.month').textContent = monthNames[month];  
       document.querySelector('.year').textContent = year; 
-  }  
-  
-    
+  }
 
 
 function showTasks(targetDate) {  
     let taskList = document.getElementById('task-list');  
     let taskData = tasks[targetDate] || []; // 获取指定日期的任务，如果没有则默认为空数组  
     // 先检查任务数组是否为空，然后构建 HTML  
-    if (taskData.length === 0 || taskData === undefined || taskData === null) {  
+    if (taskData.length === 0 || taskData === undefined || taskData === null) {
         taskList.innerHTML = '<p>No tasks for this date.</p>';  
-    } else {  
+    } else {
         taskList.innerHTML = '<ul>';  
         taskData.forEach(task => {  
             taskList.innerHTML += `<li>${task}</li>`;  
@@ -86,7 +126,7 @@ function showTasks(targetDate) {
 }  
     
   // 初始显示当前月份的日历  
-  showCalendar(currentMonth, currentYear);  
+  // showCalendar(currentMonth, currentYear);
     
   // 你可以添加更多功能，如上下按钮来改变月份和年份  
   document.querySelector('.prev').addEventListener('click', function() {  
@@ -112,7 +152,7 @@ function showTasks(targetDate) {
 //显示弹窗
 function showTaskModal() {  
     // 显示模态框  
-    var modal = document.getElementById("taskModal");  
+    let modal = document.getElementById("taskModal");
     modal.style.display = "block";  
     let noticeContainer = document.getElementById('notice-list');  
     for (let key in notice_tasks) {  
@@ -129,8 +169,8 @@ function showTaskModal() {
 // 隐藏弹窗  
 
 
-function hideTaskModal() {  
-    var modal = document.getElementById("taskModal");  
+function hideTaskModal() {
+    let modal = document.getElementById("taskModal");
     modal.style.display = "none";  
 }  
   

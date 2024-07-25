@@ -27,7 +27,7 @@ urlpatterns = [
     path('api/<int:pk>/', TaskUpdateView.as_view(), name='update-task'),
     path('api/<int:pk>/delete/', TaskDeleteView.as_view(), name='delete-task'),
     path('api/', ListTasksView.as_view(), name='list-task'),
-    path('calendar/', calendar_view, name='calendar'),
+    path('calendar/', views.calendar_view, name='calendar'),
 
     path('', views.index, name='index'),
     path('index/', views.index, name='index'),
@@ -35,4 +35,5 @@ urlpatterns = [
     path('register/', views.register, name='register'),
     path('user_center/', views.user_center, name='user_center'),
     path('sign in/', views.sign_in, name='sign in'),
+    path('calendar_data/', views.calendar_data, name='calendar_data'),
 ]

@@ -1,5 +1,8 @@
 from calendar import calendar
 from datetime import datetime
+from datetime import timedelta
+from datetime import date
+from calendar import monthrange
 from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect, JsonResponse
@@ -13,10 +16,6 @@ from .serializers import TaskSerializer
 
 def home_view(request):
     return render(request, 'home.html', {})
-
-
-def calendar_view(request):
-    return render(request, 'calendar.html', {})
 
 
 class TaskUpdateView(generics.RetrieveUpdateAPIView):
@@ -106,25 +105,25 @@ def task_to_dict(task):
 
 
 def calendar_view(request):
+    return render(request, 'calendar.html', {})
+
+
+def calendar_data(request):
     if request.method == 'POST':
-        date = request.POST['date'].split('-')
+        date = request.POST.get('date', '2024-07-11').split('-')
         year = int(date[0])
         month = int(date[1])
-        _, last_day_of_month = calendar.monthrange(year, month)
-        last_day_of_month = datetime(year, month, last_day_of_month)
-        first_day_of_month = datetime(year, month, 1)
+        _, last_day_of_month = monthrange(year, month)
+        last_day_of_month = datetime(year, month, last_day_of_month).date()
+        first_day_of_month = datetime(year, month, 1).date()
         current_day = first_day_of_month
         ans = {}
         while current_day <= last_day_of_month:
             ans.setdefault(current_day.strftime("%Y-%m-%d"), [])
-            current_day += datetime.timedelta(days=1)
+            current_day += timedelta(days=1)
         user_now = request.user
         task_list = Task.objects.filter(user=user_now)
         for task in task_list:
-            if task.due_date >= first_day_of_month and task.due_date <= last_day_of_month:
+            if first_day_of_month <= task.due_date <= last_day_of_month:
                 ans[task.due_date.strftime("%Y-%m-%d")].append(task_to_dict(task))
         return JsonResponse(ans)
-
-    else:
-        return render(request, 'calendar.html', {})
-
