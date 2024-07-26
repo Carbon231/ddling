@@ -71,7 +71,7 @@
                         </div>
                         <div class="form-group">
                             <label>Description</label>
-                            <input type="text" class="form-control form-control-sm" v-model="description">
+                            <input type="text" class="form-control form-control-sm" v-model="description" />
                         </div>
                         <div class="form-group">
                             <label>importance</label><br>
@@ -84,7 +84,7 @@
                         </div>
                         <div class="form-group">
                             <label>due_date</label>
-                            <input type="date" class="form-control form-control-sm" v-model="due_date">
+                            <input type="date" class="form-control form-control-sm" v-model="due_date" />
                         </div>
                         <a href="#" class="card-link" v-on:click="createTask" ><i class="fa fa-check"></i></a>
                         <a href="#" class="card-link" v-on:click="hideForm" ><i class="fa fa-times"></i></a>
@@ -115,7 +115,7 @@
                     "title": this.title,
                     "description": this.description,
                     "importance": this.importance,
-                    "due-date": this.due_date,
+                    "due_date": this.due_date,
                 };
                 axios
                     .post(url, data)
@@ -168,7 +168,7 @@
                         </div>
                         <div class="form-group">
                             <label>due_date</label>
-                            <input type="text" class="form-control form-control-sm" v-model="task.due_date">
+                            <input type="date" class="form-control form-control-sm" v-model="task.due_date">
                         </div>
                         <a href="#" class="card-link" v-on:click="hideForm" ><i class="fa fa-check"></i></a>
 
@@ -195,8 +195,8 @@
                 let data = {
                     "title": this.task.title,
                     "description": this.task.description,
-                    "importance": this.importance,
-                    "due_date": this.due_date,
+                    "importance": this.task.importance,
+                    "due_date": this.task.due_date,
                 };
                 axios
                     .put(url, data)
