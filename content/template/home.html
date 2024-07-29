@@ -142,13 +142,17 @@
         template: `
             <div>
                 <div class="card border-dark mb-3" v-show="!isEditing">
-                    <div class="card-body text-dark">
+                    <div class="card-body text-dark"
+                         :class="{'low-importance': task.importance === 2,
+                                'medium-importance': task.importance === 1,
+                                'high-importance': task.importance === 0 }"
+                         id="color_card">
                         <h6 class="card-title">[[ task.title ]]</h6>
                         <p class="card-text">[[ task.description ]]</p>
+                        <p class="card-due_date">due date: [[ task.due_date ]]</p>
                         <a href="#" class="card-link" v-on:click="deleteTask(task)"><i class="fa fa-trash-o"></i></a>
                         <a href="#" class="card-link" v-on:click="showForm" ><i class="fa fa-pencil-square-o"></i></a>
                         <a href="#" class="card-link" v-on:click="completeTask" v-show="canBeCompleted"><i class="fa fa-check"></i></a>
-
                     </div>
                 </div>
 

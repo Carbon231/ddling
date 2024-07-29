@@ -5,10 +5,7 @@ const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Frida
 let currentDate = new Date();  
 let currentMonth = currentDate.getMonth();  
 let currentYear = currentDate.getFullYear();  
-let tasks = {  
-    '2024-07-21':['Title: task1 ,Status:todo, Importance:LOW','Title: task2 ,Status:todo, Importance:HIGH'],
-    '2024-07-25': ['Title: task3 ,Status:todo, Importance:LOW','Title: task4 ,Status:todo, Importance:HIGH']
-   
+let tasks = {
 };  
 let notice_tasks = {
 };
