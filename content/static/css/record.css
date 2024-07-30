@@ -1,0 +1,172 @@
+/* 基本样式 */  
+body {  
+    font-family: Arial, sans-serif;  
+    margin: 0;  
+    display: flex;  
+    flex-direction: column;  
+    align-items: center;  
+    text-align: center;  
+    background-color: #FEDCD2;  
+    position: relative;  
+    min-height: 100vh;  
+    padding: 40px;  
+}  
+  
+/* 头部和主体部分的样式 */  
+header, main {  
+    width: 80%;  
+    margin: 0 auto;  
+}  
+  
+header {  
+    display: flex; /* 启用 Flexbox */  
+    justify-content: space-between; /* 子元素之间的空间平均分布，但首项在开头，末项在末尾 */  
+    padding: 20px; /* 添加一些内边距，使布局更美观 */  
+}  
+
+header h1 {  
+    align-items: center; /* 垂直居中子元素 */  
+    margin-left: 150px;
+    margin-top: 80px;
+    font-size:40px;
+    font-family: tahoma;
+}  
+  
+header img {  
+    max-width: 100%; /* 响应式图片，最大宽度不超过其容器 */  
+    height: 120px; /* 保持图片原始宽高比 */  
+    margin-right: 70px;
+    margin-top: 30px;
+    width:120px;
+}
+  
+main {  
+    background-color:white;
+    padding: 20px;  
+    border-radius: 8px;  
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 添加阴影效果 */  
+    margin-top: 20px;  
+}  
+  
+/* 统计信息的样式 */  
+.stat {  
+    margin-bottom: 10px;  
+    display: flex;  
+    margin-left: 410px;
+    gap: 10px;  
+    color: #4277b2;
+}  
+  
+.label {  
+    font-weight: bold;  
+}  
+  
+/* 任务列表的样式 */  
+#taskList ul {  
+    list-style-type: none;  
+    padding: 0;  
+}  
+  
+#taskList li {  
+    margin-bottom: 5px;  
+    padding: 8px;  
+    border: 1px solid #ccc;  
+    border-radius: 4px;  
+    background-color: #f9f9f9;  
+}  
+  
+.completed {  
+    text-decoration: line-through;  
+    color: #999; /* 标记为完成的任务文字颜色变浅 */  
+}  
+  
+/* 返回按钮和查看任务记录的按钮样式 */  
+#return-button{  
+    position: absolute;  
+    left: 120px;  
+    margin-top: 60px; /* 返回按钮的位置 */  
+    outline: none;  
+    background-color: #fd819e; /* 粉色背景 */  
+    border-color:  #fd819e;
+    color:rgb(0, 0, 0);
+    cursor: pointer;  
+    z-index: 100; /* 确保按钮在模态框之上 */  
+    width:120px;
+    height: 40px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 添加阴影效果 */  
+    font-weight: bold;
+}  
+
+.look {  
+    position: absolute;  
+    left: 120px;  
+    margin-top: 125px; /* 返回按钮的位置 */  
+    outline: none;  
+    background-color: #00ffc8; /* 蓝色背景 */  
+    border-color: #00ffc8;
+    color: rgb(0, 0, 0);   
+    cursor: pointer;  
+    z-index: 100; /* 确保按钮在模态框之上 */  
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 添加阴影效果 */  
+    width:120px;
+    height:40px;
+    font-weight: bold;
+}  
+  
+  
+/* 按钮悬停效果 */  
+#return-button:hover {  
+   background-color: #fe8ce2; 
+}  
+
+.look :hover{
+    background-color: #05a17d;
+}
+/* 模态框的样式 */  
+.modal {  
+    display: none;  
+    position: fixed;  
+    z-index: 1;  
+    left: 0;  
+    top: 0;  
+    width: 100%;  
+    height: 100%;  
+    overflow: auto;  
+    background-color: rgba(0, 0, 0, 0.4);  
+}  
+  
+.modal-content {  
+    background-color: #fefefe;  
+    margin: 10% auto; /* 模态框内容垂直居中 */  
+    padding: 20px;  
+    border: 1px solid #888;  
+    width: 80%;  
+    border-radius: 8px; /* 添加圆角 */  
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 添加阴影效果 */  
+}  
+  
+.close {  
+    color: #aaa;  
+    float: right;  
+    font-size: 28px;  
+    font-weight: bold;  
+}  
+  
+.close:hover,  
+.close:focus {  
+    color: black;  
+    text-decoration: none;  
+    cursor: pointer;  
+}
+
+#Chart {  
+    width: 300px;
+    height: 200px; 
+    margin-left: 350px;
+
+}
+
+a {  
+    text-decoration: none;  
+}
+

@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 
 from account import views
-from account.views import home_view, calendar_view, TaskUpdateView, TaskDeleteView, ListTasksView
+from account.views import home_view, calendar_view, TaskUpdateView, TaskDeleteView, ListTasksView,record_view
 
 
 urlpatterns = [
@@ -28,6 +28,7 @@ urlpatterns = [
     path('api/<int:pk>/delete/', TaskDeleteView.as_view(), name='delete-task'),
     path('api/', ListTasksView.as_view(), name='list-task'),
     path('calendar/', views.calendar_view, name='calendar'),
+    path('record/',views.record_view,name = 'record'),
 
     path('', views.index, name='index'),
     path('index/', views.index, name='index'),
@@ -35,5 +36,7 @@ urlpatterns = [
     path('register/', views.register, name='register'),
     path('user_center/', views.user_center, name='user_center'),
     path('sign in/', views.sign_in, name='sign in'),
-    path('calendar_data/', views.calendar_data, name='calendar_data'),
+    path('calendar_data/', views.calendar_data, name='all_calendar_data'),
+    path('undone_data/', views.history_data_undone, name='undone_data'),
+    path('done_data/', views. history_data_done,name='done_data'),
 ]

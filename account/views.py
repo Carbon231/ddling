@@ -1,8 +1,9 @@
 from calendar import calendar
-from datetime import datetime
+from datetime import datetime, timezone
 from datetime import timedelta
 from datetime import date
 from calendar import monthrange
+import json
 from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect, JsonResponse
@@ -12,10 +13,25 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework import generics
 from .models import Task
 from .serializers import TaskSerializer
+from django.utils import timezone
+from datetime import timedelta
 
 
 def home_view(request):
     return render(request, 'home.html', {})
+
+
+def record_view(request):
+    task_done = history_data_done(request)
+    task_undone = history_data_undone(request)
+    task_done_json = json.dumps(list(task_done))
+    task_undone_json = json.dumps(list(task_undone))
+    completed = len(task_done)
+    imcompleted = len(task_undone)
+    total = completed + imcompleted
+    return render(request, 'record.html',
+                  {"completed": completed, "imcompleted": imcompleted, "total": total, "task_done": task_done_json,
+                   "task_undone": task_undone_json})
 
 
 class TaskUpdateView(generics.RetrieveUpdateAPIView):
@@ -93,7 +109,6 @@ def user_center(request):
         return HttpResponseRedirect(reverse('index'))
 
 
-
 def task_to_dict(task):
     return {
         'title': task.title,
@@ -105,7 +120,9 @@ def task_to_dict(task):
 
 
 def calendar_view(request):
-    return render(request, 'calendar.html', {})
+    noticelist = notice_data(request)
+    noticeList = json.dumps(noticelist)
+    return render(request, 'calendar.html', {"noticeList": noticeList})
 
 
 def calendar_data(request):
@@ -127,3 +144,37 @@ def calendar_data(request):
             if first_day_of_month <= task.due_date <= last_day_of_month:
                 ans[task.due_date.strftime("%Y-%m-%d")].append(task_to_dict(task))
         return JsonResponse(ans)
+
+
+def notice_data(request):
+    today = timezone.now().date()
+    day_after = today + timedelta(days=10)
+    user_now = request.user
+    task_list = Task.objects.filter(user=user_now)
+    ans = []
+    for task in task_list:
+        if task.due_date >= today and task.due_date < day_after and task.status != 'done':
+            ans.append(task_to_dict(task))
+    return ans
+
+
+def history_data_done(request):
+    today = date.today()
+    user_now = request.user
+    task_list = Task.objects.filter(user=user_now)
+    ans = []
+    for task in task_list:
+        if task.due_date < today and task.get_status_display() == 'done':
+            ans.append(task_to_dict(task))
+    return ans
+
+
+def history_data_undone(request):
+    today = date.today()
+    user_now = request.user
+    task_list = Task.objects.filter(user=user_now)
+    ans = []
+    for task in task_list:
+        if task.due_date < today and task.get_status_display() != 'done':
+            ans.append(task_to_dict(task))
+    return ans

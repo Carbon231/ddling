@@ -23,30 +23,53 @@
     <div id="task-list"></div>  
 </div>  
 
-<div id="dialog-box" >  
-    <h4 style="color:red;">红色标注的字体是今天的日期~</h4>  
-    <h4 style="color:green;">绿色标注的是有任务的日期~</h4>
-    <h4 style="color: black;">加油吧！ε٩(๑> ₃ <)۶з</h4> 
-    <h5 style="color: black;">（点击文字查看具体任务）</h5>
+<div class = "dialog">
+<div id="dialog-box" >
+    <h4 style="color: #DF744A;">请点击文字查看具体任务~</h4>
+    <h4 style="color:#DF744A;">加油吧！ε٩(๑> ₃ <)۶з</h4>
+</div>
+<div class="dialog-arrow"></div>
 </div>
 
-<div id="taskModal" class="modal">  
-    <div class="modal-content">  
+<div id = "img-cat">
+    <img src="{% static 'img/cat-calendar.jpeg' %}" alt="">
+</div>
+
+<div id="taskModal" class="modal">
+    <div class="modal-content">
     <h4>以下是近10天内需要完成的任务</h4>
-    <h5>请尽快完成哦\(^o^)/~</h5>
-    <div id="notice-list"></div>
+    <h4>请加快速度哦！</h4>
+    <ul id="notice-list"></ul>
     <span class="close" onclick="hideTaskModal()">&times;</span>
 </div>
 </div>
 
 
 <div class = "choice">
-    <button class = "return">返回主页面</button>
+    <button class = "return">
+        <a href="/home/" class="btn btn-primary",style = " text-decoration: none;
+        color:white;">返回主页面</a>
+    </button>
     <button class="look" onclick="showTaskModal()">任务提醒</button>
-    <button class = "exit">用户中心</button>
+    <button class = "exit"><a href="/user_center/" class="btn btn-primary",style = " text-decoration: none;
+        color:white;">用户中心</a></button>
 </div>
-  
 <script src="{% static 'js/script.js' %}"></script>
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>  
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    var Notice = JSON.parse('{{ noticeList|escapejs }}');
+    var tasksList = document.getElementById('notice-list');
+    tasksList.innerHTML = '';
+    Notice.forEach(function(task) {
+       if(task.status!= 'done'){
+           var li = document.createElement('li');
+           li.textContent = '任务截止时间: ' + task.due_date +'     Title: '+task.title+'   Status: '+task.status+'    Importance: '+task.importance;
+           tasksList.appendChild(li);
+    }
+    });
+})
+    </script>
 </body>  
 </html>

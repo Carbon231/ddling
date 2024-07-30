@@ -1,0 +1,80 @@
+{% load static %}
+{% csrf_token %}
+<!DOCTYPE html>  
+<html lang="en">  
+<head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>任务完成情况统计</title>  
+    <link rel="stylesheet" href="{% static 'css/record.css' %}">  
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>  
+<body>  
+    <button id="return-button">
+        <a href="/home/" class="btn" style = " text-decoration: none;
+        color:white;">返回主页面</a>
+    </button>
+    <button class="look" onclick="showTaskModal()"  style = "color:white">任务记录</button>
+    <header>  
+        <h1 style="color: #DF744A;">让猫猫看看完成了多少任务呢</h1>  
+        <img src="{% static 'img/cat-record.jpeg' %}" alt="">
+    </header>  
+    <main>  
+        <section id="taskStats">  
+            <h2 style= "color:black;">任务统计(喵呜~)</h2>  
+            <div class="stat">  
+                <span class="label">总任务数: </span>  
+                <span class="value" id="totalTasks">{{total}} </span>  
+            </div>  
+            <div class="stat">  
+                <span class="label">已完成:</span>  
+                <span class="value" id="completedTasks">{{completed}} </span>  
+            </div>  
+            <div class="stat">  
+                <span class="label">未完成:</span>  
+                <span class="value" id="incompletedTasks"> {{imcompleted}}</span>  
+            </div>  
+        </section>  
+        
+        <section>  
+            <div id="charts">    
+                <h2 style= "color:black;">请继续努力哦(*╹▽╹*)</h2> 
+                <div id="Chart" >  
+                    <canvas id = "pieChart" width="300" height="200"></canvas>         
+                </div>  
+            </div>  
+        </section>
+
+    <div id="taskModal" class="modal">  
+        <div class="modal-content">  
+            <h2>任务列表</h2>
+            <ul id="tasksList">  
+
+            </ul>  
+            <span class="close" onclick="hideTaskModal()">&times;</span>
+        </div>
+    </div>
+        
+    </main>  
+    <script src="{% static 'js/record.js' %}"></script>  
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {  
+        var taskDone = JSON.parse('{{ task_done|escapejs }}');  
+        var taskUndone = JSON.parse('{{ task_undone|escapejs }}');        
+    var tasksList = document.getElementById('tasksList');  
+    tasksList.innerHTML = '';  
+   taskDone.forEach(function(task) {  
+       var li = document.createElement('li');  
+       li.textContent = '已完成: ' + task.title +'    '+task.due_date; 
+       tasksList.appendChild(li);  
+    });  
+   taskUndone.forEach(function(task) {  
+     var li = document.createElement('li');  
+     li.textContent = '未完成: ' + task.title + '    '+task.due_date; 
+     tasksList.appendChild(li);  
+  });  
+})
+    </script>
+    
+</body>  
+</html>
