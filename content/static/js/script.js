@@ -11,54 +11,7 @@ let notice_tasks = {
 showCalendar(currentMonth, currentYear);
 
 
-function getCookie(name) {
-    let cookieValue = null;
-    if (document.cookie && document.cookie !== '') {
-        const cookies = document.cookie.split(';');
-        for (let i = 0; i < cookies.length; i++) {
-            const cookie = cookies[i].trim();
-            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
-        }
-    }
-    return cookieValue;
-}
-
-
-function add_to_tasks(data) {
-    Object.keys(data).forEach(date => {
-        const tasksForDate = data[date];
-        if (tasksForDate.length > 0) {
-            tasks[date] = tasksForDate.map(task => {
-                return `Title: ${task.title} ,Status:${task.status}, Importance:${task.importance}`;
-            });
-        }
-    });
-}
-
-
-async function fetchCalendarTasks() {
-    const url = '/calendar_data/';
-    const csrf_token = getCookie('csrftoken');
-    const data = { date: "2024-07-22" };
-    fetch(url, {
-        method: "POST",
-        body: JSON.stringify(data),
-        headers: {
-            "X-CSRFToken": csrf_token,
-            'Content-Type': 'application/json'
-        },
-    })
-      .then(response => response.json())
-        .then(data => add_to_tasks(data))
-      .catch(error => console.error('Error fetching tasks:', error));
-    }
-
-
- async function showCalendar(month, year) {
-  await fetchCalendarTasks();
+function showCalendar(month, year) {
   const today = new Date();
   const todayYear = today.getFullYear();
   const todayMonth = today.getMonth(); // 注意：getMonth() 返回的是 0-11
@@ -78,16 +31,11 @@ async function fetchCalendarTasks() {
         div.classList.add('today');
     }
     const dayDate = `${year}-${(month + 1).toString().padStart(2, '0')}-${dateString}`; // 确保月份是两位数的
-    const taskData = tasks[dayDate];
-    console.log(dayDate);
-    console.log(taskData);
-    if (taskData && taskData.length > 0) {
+    //const taskData = tasks[dayDate];
+    //if (taskData && taskData.length > 0) {
+    if (dayDate in tasks ){
         div.classList.add('has-tasks');
     }
-    /*if (year === todayYear && month === todayMonth && day - todayDay >= 0 && day - todayDay <= 10) {
-        if (taskData && taskData.length > 0) {
-            notice_tasks[dayDate]=tasks[dayDate]
-        }}*/
     div.addEventListener('click', function() {
         showTasks(this.getAttribute('data-date'));
     });
@@ -98,20 +46,35 @@ async function fetchCalendarTasks() {
   }
 
 
-function showTasks(targetDate) {
+  function showTasks(targetDate) {
     let taskList = document.getElementById('task-list');
-    let taskData = tasks[targetDate] || []; // 获取指定日期的任务，如果没有则默认为空数组
+    let ul = '<ul>'; // 初始化ul标签
+
+    // 检查是否存在对应日期的任务
+    if (targetDate in tasks && tasks[targetDate].length > 0) {
+        // 遍历任务数组，为每个任务添加一个<li>标签
+        tasks[targetDate].forEach(task => {
+            ul += `<li>${task}</li>`; // 将任务添加到ul字符串中
+        });
+        ul += '</ul>'; // 添加ul的结束标签
+        taskList.innerHTML = ul; // 将完整的ul字符串设置到taskList的innerHTML中
+
+    } else {
+        // 如果没有任务或不存在对应日期的键，显示相同的信息
+        taskList.innerHTML = '<p>No tasks for this date.</p>';
+    }
+}
+
+    //const taskData = tasks[targetDate] || [];
     // 先检查任务数组是否为空，然后构建 HTML
-    if (taskData.length === 0 || taskData === undefined || taskData === null) {
+    /*if (taskData.length === 0 || taskData === undefined || taskData === null) {
         taskList.innerHTML = '<p>No tasks for this date.</p>';
     } else {
         taskList.innerHTML = '<ul>';
-        taskData.forEach(task => {
-            taskList.innerHTML += `<li>${task}</li>`;
-        });
+        taskList.innerHTML += `<li>${taskData}</li>`;
         taskList.innerHTML += '</ul>';
-    }
-}
+    }  */
+//}
 
 document.querySelector('.prev').addEventListener('click', function() {
       if (currentMonth === 0) {
@@ -138,16 +101,7 @@ function showTaskModal() {
     // 显示模态框
     let modal = document.getElementById("taskModal");
     modal.style.display = "block";
-    /*let noticeContainer = document.getElementById('notice-list');
-    for (let key in notice_tasks) {
-      if (notice_tasks.hasOwnProperty(key)) {
-    // 创建一个新的<div>元素来包含每个任务的信息
-      let taskDiv = document.createElement('div');
-     taskDiv.textContent = `任务内容：${notice_tasks[key]}；截止日期：${key}`;
-    // 将<div>元素添加到<div id="notice-container">中
-     noticeContainer.appendChild(taskDiv);
-  }
-}  */
+
 }
 
 function hideTaskModal() {

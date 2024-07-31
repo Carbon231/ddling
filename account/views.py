@@ -121,29 +121,19 @@ def task_to_dict(task):
 
 def calendar_view(request):
     noticelist = notice_data(request)
+    tasklist = calendar_data(request)
     noticeList = json.dumps(noticelist)
-    return render(request, 'calendar.html', {"noticeList": noticeList})
+    tasks = json.dumps(tasklist)
+    return render(request, 'calendar.html', {"noticeList": noticeList, "tasks": tasks})
 
 
 def calendar_data(request):
-    if request.method == 'POST':
-        date = request.POST.get('date', '2024-07-11').split('-')
-        year = int(date[0])
-        month = int(date[1])
-        _, last_day_of_month = monthrange(year, month)
-        last_day_of_month = datetime(year, month, last_day_of_month).date()
-        first_day_of_month = datetime(year, month, 1).date()
-        current_day = first_day_of_month
-        ans = {}
-        while current_day <= last_day_of_month:
-            ans.setdefault(current_day.strftime("%Y-%m-%d"), [])
-            current_day += timedelta(days=1)
-        user_now = request.user
-        task_list = Task.objects.filter(user=user_now)
-        for task in task_list:
-            if first_day_of_month <= task.due_date <= last_day_of_month:
-                ans[task.due_date.strftime("%Y-%m-%d")].append(task_to_dict(task))
-        return JsonResponse(ans)
+    ans = []
+    user_now = request.user
+    task_list = Task.objects.filter(user=user_now)
+    for task in task_list:
+        ans.append(task_to_dict(task))
+    return ans
 
 
 def notice_data(request):

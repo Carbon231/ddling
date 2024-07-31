@@ -69,7 +69,22 @@
            tasksList.appendChild(li);
     }
     });
-})
+    var Task = JSON.parse('{{ tasks|escapejs }}');
+
+    //let tasks = {};
+
+
+Task.forEach(function(task) {
+    if (!tasks[task.due_date]) {
+        tasks[task.due_date] = [];
+    }
+    tasks[task.due_date].push(`Title: ${task.title} ,Status:${task.status}, Importance:${task.importance}`);
+});
+    //Task.forEach(function(task){
+        //tasks[task.due_date]=`Title: ${task.title} ,Status:${task.status}, Importance:${task.importance}`;
+    //})
+
+ })
     </script>
 </body>  
 </html>
